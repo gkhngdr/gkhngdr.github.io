@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/footiq/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="FootIQ — Futbol Bilgi Yarışması">
+  <meta name="theme-color" content="#0D1B2A">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FootIQ">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>FootIQ</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0D1B2A;
+      overflow: hidden;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+      /* Basılı tutunca (bas-konuş) iPhone'un büyüteç/menü balonu çıkmasın. */
+      -webkit-touch-callout: none;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Telefon tarayıcısında çizim yoğunluğu en fazla 2x: Flutter web her kareyi
+    // ekran yoğunluğunda çizer (iPhone 3x); 2x'te yük ~yarıya iner, fark zor seçilir.
+    (function () {
+      var r = window.devicePixelRatio || 1;
+      if (r > 2 && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+        Object.defineProperty(window, 'devicePixelRatio', { get: function () { return 2; } });
+      }
+    })();
+  </script>
+  <!-- GitHub Pages COOP/COEP başlığı veremiyor; bu betik tarayıcıda ekler.
+       Böylece hızlı WebAssembly çizicisi (skwasm) açılabilir. -->
+  <script src="coi-serviceworker.js"></script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
