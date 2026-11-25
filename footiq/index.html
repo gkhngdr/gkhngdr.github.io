@@ -36,6 +36,29 @@
   </style>
 </head>
 <body>
+  <!-- Güvenli alan ölçer (çentik / iPhone alt çizgisi): Flutter web bunları
+       bildirmez; lib/core/safe_area_web.dart buradan okur. -->
+  <div id="fq-safe" aria-hidden="true" style="position:fixed;top:0;left:0;width:0;height:0;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)"></div>
+  <script>
+    window.fqSafeArea = function () {
+      var d = document.getElementById('fq-safe');
+      if (!d) return [0, 0];
+      var s = getComputedStyle(d);
+      return [parseFloat(s.paddingTop) || 0, parseFloat(s.paddingBottom) || 0];
+    };
+    // Flutter açılışta görünüm (viewport) etiketini kendi ayarıyla değiştirip
+    // "viewport-fit=cover"ı siliyor; ana ekrana eklenen iPhone uygulamasında
+    // oyun alt çizgi bölgesine uzanmıyor, altta boş bant kalıyordu. Geri ekle.
+    (function () {
+      function fit() {
+        document.querySelectorAll('meta[name="viewport"]').forEach(function (m) {
+          if (m.content.indexOf('viewport-fit') < 0) m.content += ', viewport-fit=cover';
+        });
+      }
+      new MutationObserver(fit).observe(document.head, { childList: true });
+      fit();
+    })();
+  </script>
   <script>
     // Telefon tarayıcısında çizim yoğunluğu en fazla 2x: Flutter web her kareyi
     // ekran yoğunluğunda çizer (iPhone 3x); 2x'te yük ~yarıya iner, fark zor seçilir.
